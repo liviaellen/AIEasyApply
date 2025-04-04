@@ -81,11 +81,11 @@ titleBlacklist:
 - Frontend
 posterBlacklist: []
 uploads:
-  resume: /Users/liviaellen/Desktop/MSDS/JS/EasyApplyBot/Livia Ellen - Resume 2025.pdf
+  resume: "Livia Ellen - Resume 2025.pdf"
 checkboxes:
   driversLicence: true
   requireVisa: true
-  legallyAuthorized: false
+  legallyAuthorized: true
   certifiedProfessional: true
   urgentFill: true
   commute: true
@@ -129,3 +129,5 @@ eeo:
 evaluateJobFit: false
 
 debug: false
+
+textResume: resume.txt

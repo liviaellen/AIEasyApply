@@ -21,6 +21,23 @@ To create a new account:
 3. Add minimal professional details to avoid triggering LinkedIn's security measures
 4. Use this account exclusively for the bot
 
+## 🎯 Initial Setup Tips
+
+**Important:** Before running the bot, we strongly recommend:
+
+1. **Manual Applications First**:
+   - Apply to 3-5 jobs manually on LinkedIn
+   - Make sure to apply to jobs that require resume upload
+   - This ensures your LinkedIn profile has basic information saved
+   - Helps the bot handle future applications more effectively
+   - Creates a baseline for LinkedIn's application format
+
+The manual applications help because:
+- LinkedIn saves your basic information from these applications
+- It creates a history of normal application behavior
+- Provides fallback responses if the bot encounters issues
+- Reduces the risk of account flags for unusual activity
+
 ## 🛠️ Installation
 
 1. Clone this repository
@@ -35,7 +52,7 @@ To create a new account:
 Run the bot with:
 
 ```bash
-python3 main.py
+python main.py
 ```
 
 ### Command-line Options

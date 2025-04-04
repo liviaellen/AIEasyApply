@@ -673,19 +673,21 @@ class LinkedinEasyApply:
                 # Radio check
                 radio_fieldset = question.find_element(By.TAG_NAME, 'fieldset')
                 question_span = radio_fieldset.find_element(By.CLASS_NAME, 'fb-dash-form-element__label').find_elements(By.TAG_NAME, 'span')[0]
-                radio_text = question_span.text.lower()
+                radio_text = question_span.text.lower()  # Convert question to lowercase
                 print(f"Radio question text: {radio_text}")
 
                 radio_labels = radio_fieldset.find_elements(By.TAG_NAME, 'label')
-                radio_options = [(i, text.text.lower()) for i, text in enumerate(radio_labels)]
-                print(f"radio options: {[opt[1] for opt in radio_options]}")
+                # Store both original text and lowercase version for matching
+                radio_options = [(i, text.text, text.text.lower()) for i, text in enumerate(radio_labels)]
+                print(f"radio options: {[opt[2] for opt in radio_options]}")  # Print lowercase versions
 
                 if len(radio_options) == 0:
                     raise Exception("No radio options found in question")
 
                 answer = None
+                to_select = None
 
-                # Try to determine answer using existing logic
+                # Get answer based on question type (existing logic)
                 if 'driver\'s licence' in radio_text or 'driver\'s license' in radio_text:
                     answer = self.get_answer('driversLicence')
                 elif any(keyword in radio_text.lower() for keyword in
@@ -698,7 +700,7 @@ class LinkedinEasyApply:
                          ]):
                     negative_keywords = ['prefer', 'decline', 'don\'t', 'specified', 'none', 'no']
                     answer = next((option for option in radio_options if
-                                   any(neg_keyword in option[1].lower() for neg_keyword in negative_keywords)), None)
+                                   any(neg_keyword in option[2] for neg_keyword in negative_keywords)), None)
 
                 elif 'assessment' in radio_text:
                     answer = self.get_answer("assessment")
@@ -758,23 +760,56 @@ class LinkedinEasyApply:
                 elif 'sponsor' in radio_text:
                     answer = self.get_answer('requireVisa')
 
-                to_select = None
                 if answer is not None:
                     print(f"Choosing answer: {answer}")
-                    i = 0
-                    for radio in radio_labels:
-                        if answer in radio.text.lower():
+                    answer_lower = answer.lower()  # Convert answer to lowercase once
+
+                    # 1. Try exact match first (case-insensitive)
+                    for i, (_, original_text, lower_text) in enumerate(radio_options):
+                        if answer_lower == lower_text:
                             to_select = radio_labels[i]
+                            print(f"Found exact match: {original_text}")
                             break
-                        i += 1
+
+                    # 2. If no exact match, try partial match
                     if to_select is None:
-                        print("Answer not found in radio options")
+                        for i, (_, original_text, lower_text) in enumerate(radio_options):
+                            if answer_lower in lower_text:
+                                to_select = radio_labels[i]
+                                print(f"Found partial match: {original_text}")
+                                break
+
+                    # 3. If still no match, look for "prefer not to answer" option
+                    if to_select is None:
+                        decline_keywords = [
+                            "don't wish to answer",
+                            "prefer not",
+                            "decline",
+                            "prefer not to say",
+                            "prefer not to answer",
+                            "do not wish to answer",
+                            "choose not to answer",
+                            "don't want to answer",
+                            "rather not say",
+                            "specified",
+                            "none of the above"
+                        ]
+                        for i, (_, original_text, lower_text) in enumerate(radio_options):
+                            if any(keyword in lower_text for keyword in decline_keywords):
+                                to_select = radio_labels[i]
+                                print(f"Using decline option: {original_text}")
+                                break
+
+                    # 4. If still no match, use the last option as final fallback
+                    if to_select is None:
+                        to_select = radio_labels[-1]
+                        print(f"No match found, using last option: {radio_labels[-1].text}")
 
                 if to_select is None:
                     print("No answer determined")
                     self.record_unprepared_question("radio", radio_text)
 
-                    # Since no response can be determined, we use AI to identify the best responseif available, falling back to the final option if the AI response is not available
+                    # Use AI to generate response if available
                     ai_response = self.ai_generator.generate_response(
                         question_text,
                         response_type="choice",
@@ -783,7 +818,8 @@ class LinkedinEasyApply:
                     if ai_response is not None:
                         to_select = radio_labels[ai_response]
                     else:
-                        to_select = radio_labels[len(radio_labels) - 1]
+                        to_select = radio_labels[-1]
+
                 to_select.click()
 
                 if radio_labels:
