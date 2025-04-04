@@ -49,11 +49,8 @@ python main.py
 # Run without AI/LLM (using predefined responses only)
 python main.py --no-llm
 
-# Run in strict mode (adds quotation marks to responses)
-python main.py --strict
-
-# Run without LLM and in strict mode
-python main.py --no-llm --strict
+# Run with strict job title search (exact matches only)
+python main.py --strict-title
 
 # Run in debug mode with verbose output
 python main.py --debug
@@ -65,20 +62,20 @@ python main.py --config custom_config.yaml
 #### Command Arguments
 
 - `--no-llm`: Use predefined responses instead of AI-generated ones
-- `--strict`: Add quotation marks to responses (useful for some application forms)
+- `--strict-title`: Enable strict job title search (wraps job titles in quotes for exact matches)
 - `--debug`: Enable verbose logging for troubleshooting
 - `--config`: Specify a custom configuration file path
 
-Example responses with and without strict mode:
+Example job searches with and without strict title mode:
 
 ```
-# Normal mode (--strict not used)
-What is your greatest strength?
-→ My ability to learn quickly and adapt to new technologies
+# Normal mode (--strict-title not used)
+Job Title: Software Engineer
+→ Matches: "Software Engineer", "Senior Software Engineer", "Software Engineer II", etc.
 
-# Strict mode (--strict used)
-What is your greatest strength?
-→ "My ability to learn quickly and adapt to new technologies"
+# Strict mode (--strict-title used)
+Job Title: Software Engineer
+→ Matches: Only exact "Software Engineer" positions
 ```
 
 ### Response Generation Modes

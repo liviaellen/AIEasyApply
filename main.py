@@ -148,7 +148,7 @@ def parse_arguments():
     parser.add_argument('--no-llm', action='store_true', help='Run without using LLM/AI for responses')
     parser.add_argument('--debug', action='store_true', help='Run in debug mode with verbose output')
     parser.add_argument('--config', type=str, default='config.yaml', help='Path to custom configuration file')
-    parser.add_argument('--strict', action='store_true', help='Add quotation marks to responses')
+    parser.add_argument('--strict-title', action='store_true', help='Use strict job title search (exact matches only)')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -169,12 +169,12 @@ if __name__ == '__main__':
     else:
         parameters['useLLM'] = True
 
-    # Set strict mode if specified
-    if args.strict:
-        print("Running in strict mode - responses will include quotation marks")
-        parameters['strictMode'] = True
+    # Set strict title search if specified
+    if args.strict_title:
+        print("Using strict job title search - exact matches only")
+        parameters['strictSearch'] = True
     else:
-        parameters['strictMode'] = False
+        parameters['strictSearch'] = False
 
     # Initialize browser and start the bot
     browser = init_browser()

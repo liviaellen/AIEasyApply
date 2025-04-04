@@ -1,4 +1,4 @@
-import time, random, csv, pyautogui, traceback, os, re
+import time, random, csv, pyautogui, traceback, os, re, argparse, json, sys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -11,6 +11,13 @@ from datetime import date, datetime
 from itertools import product
 from pypdf import PdfReader
 from openai import OpenAI
+from selenium import webdriver
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='LinkedIn Easy Apply Bot')
+    parser.add_argument('--strict-position', action='store_true',
+                      help='Use strict position search (exact matches only)')
+    return parser.parse_args()
 
 class AIResponseGenerator:
     def __init__(self, api_key, personal_info, experience, languages, resume_path, text_resume_path=None, debug=False):
@@ -201,6 +208,7 @@ class LinkedinEasyApply:
         self.use_llm = parameters.get('useLLM', True)  # Default to using LLM if not specified
         self.debug = parameters.get('debug', False)  # Default to not debug mode if not specified
         self.strict_mode = parameters.get('strictMode', False)  # Default to not strict mode if not specified
+        self.strict_search = parameters.get('strictSearch', False)  # Default to not strict search if not specified
         self.poster_blacklist = parameters.get('posterBlacklist', []) or []
         self.positions = parameters.get('positions', [])
         self.locations = parameters.get('locations', [])
@@ -1335,8 +1343,8 @@ class LinkedinEasyApply:
         Navigate to the next page of job search results on LinkedIn.
 
         This method constructs the URL for the job search page based on the search parameters
-        and navigates to that page. It wraps the position in quotes for a strict search match
-        and appends the page number to the URL to paginate through results.
+        and navigates to that page. It optionally wraps the position in quotes for a strict search match
+        based on the strictSearch parameter and appends the page number to the URL to paginate through results.
 
         Args:
             position (str): The job position/title to search for
@@ -1346,10 +1354,10 @@ class LinkedinEasyApply:
         Returns:
             None
         """
-        # Wrap position in quotes for strict search
-        quoted_position = f'"{position}"'
+        # Wrap position in quotes only if strict search is enabled
+        search_position = f'"{position}"' if self.strict_search else position
         self.browser.get("https://www.linkedin.com/jobs/search/" + self.base_search_url +
-                         "&keywords=" + quoted_position + location + "&start=" + str(job_page * 25))
+                         "&keywords=" + search_position + location + "&start=" + str(job_page * 25))
 
         self.avoid_lock()
 
@@ -1467,3 +1475,38 @@ class LinkedinEasyApply:
 
         # Default to applying if no specific reason to skip
         return True
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='LinkedIn Easy Apply Bot')
+    parser.add_argument('--strict-position', action='store_true',
+                      help='Use strict position search (exact matches only)')
+    args = parser.parse_args()
+
+    try:
+        with open('config.json') as config_file:
+            parameters = json.load(config_file)
+    except FileNotFoundError:
+        print("Config file not found. Please create a config.json file.")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        print("Config file is not valid JSON. Please check the format.")
+        sys.exit(1)
+
+    if parameters is None:
+        print("Config file is empty. Please check the file.")
+        sys.exit(1)
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument("--remote-debugging-port=9222")
+
+    if parameters.get('headless'):
+        chrome_options.add_argument('--headless')
+
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.maximize_window()
+
+    bot = LinkedinEasyApply(parameters, driver)
+    bot.login()
+    bot.start_applying()

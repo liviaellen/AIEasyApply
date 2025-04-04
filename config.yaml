@@ -1,6 +1,6 @@
-email: your-email@gmail.com
-password: your-password
-openaiApiKey: 'only needed if you want to use llm - not needed for this bot if you use --no-llm tag'
+email: lellen@dons.usfca.edu
+password: 0Lalala13@@
+openaiApiKey: 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
 disableAntiLock: false
 remote: false
 lessthanTenApplicants: false
@@ -23,7 +23,7 @@ jobTypes:
 date:
   all time: false
   month: false
-  week: false
+  week: true
   24 hours: true
 positions:
   - Machine Learning Engineer
@@ -64,7 +64,7 @@ locations:
 - Sunnyvale
 - Cupertino
 
-residentStatus: false
+residentStatus: True
 distance: 100
 outputFileDirectory: ~/Desktop/MSDS/JS/EasyApplyBot/
 companyBlacklist:
@@ -81,7 +81,7 @@ titleBlacklist:
 - Frontend
 posterBlacklist: []
 uploads:
-  resume: /Users/liviaellen/Desktop/MSDS/JS/Livia Ellen - Resume 2025.pdf
+  resume: /Users/liviaellen/Desktop/MSDS/JS/EasyApplyBot/Livia Ellen - Resume 2025.pdf
 checkboxes:
   driversLicence: true
   requireVisa: true
@@ -107,16 +107,16 @@ experience:
   default: 6
 personalInfo:
   Pronouns: Ms.
-  First Name: john
-  Last Name: Doe
+  First Name: Livia
+  Last Name: Ellen
   Phone Country Code: United States (+1)
-  Mobile Phone Number: '41-------'
-  Street address: 1000 Market St
+  Mobile Phone Number: '4156380329'
+  Street address: 960 Pine St, Apt 24
   City: San Francisco, CA
   State: California
-  Zip: '94100'
-  Linkedin: https://www.linkedin.com/in/eeeeeee/
-  Website: https://github.com/eeeeeee
+  Zip: '94108'
+  Linkedin: https://www.linkedin.com/in/liviaellen/
+  Website: https://liviaellen.com/portfolio
   MessageToManager: Hi, I am interested to join your organization. Please have a look
     at my resume. Thank you.
 eeo:
