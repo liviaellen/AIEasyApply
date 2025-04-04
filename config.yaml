@@ -1,0 +1,131 @@
+email: your-email@gmail.com
+password: your-password
+openaiApiKey: 'only needed if you want to use llm - not needed for this bot if you use --no-llm tag'
+disableAntiLock: false
+remote: false
+lessthanTenApplicants: false
+newestPostingsFirst: true
+experienceLevel:
+  internship: false
+  entry: true
+  associate: true
+  mid-senior level: true
+  director: false
+  executive: false
+jobTypes:
+  full-time: true
+  contract: true
+  part-time: false
+  temporary: true
+  internship: false
+  other: false
+  volunteer: false
+date:
+  all time: false
+  month: false
+  week: false
+  24 hours: true
+positions:
+  - Machine Learning Engineer
+  - Data Scientist
+  - AI Engineer
+  - Artifical Intelligence Engineer
+  # - Computer Vision Engineer
+  # - Deep Learning Engineer
+  # - NLP Engineer
+  # - LLM Engineer
+  # - Generative AI Engineer
+  # - AI/ML Research Engineer
+  # - Data Science Consultant
+  # - AI Consultant
+  # - Data Analyst
+  # - AI Product Developer
+  # - Multimodal AI Engineer
+  # - Data Engineer (AI focus)
+  # - MLOps Engineer
+  # - Prompt Engineer
+  # - RAG Engineer
+  # - AI Content Engineer
+  # - ML Engineer - AR
+  # - ML - Immersive Experience Engineer
+  # - Technical AR/VR Consultant
+  # - AI Innovation Specialist
+  # - AI Prototyping Engineer
+  # - AI Solutions Architect
+locations:
+- San Francisco
+- San Francisco Bay Area
+- Bay Area
+- San Jose
+- San Mateo
+- Redwood City
+- Palo Alto
+- Mountain View
+- Sunnyvale
+- Cupertino
+
+residentStatus: false
+distance: 100
+outputFileDirectory: ~/Desktop/MSDS/JS/EasyApplyBot/
+companyBlacklist:
+- Wayfair
+- Jobot
+- Crossover
+
+titleBlacklist:
+- Founding
+- Founder
+- Co-Founder
+- Cofounder
+- Front End
+- Frontend
+posterBlacklist: []
+uploads:
+  resume: /Users/liviaellen/Desktop/MSDS/JS/Livia Ellen - Resume 2025.pdf
+checkboxes:
+  driversLicence: true
+  requireVisa: true
+  legallyAuthorized: false
+  certifiedProfessional: true
+  urgentFill: true
+  commute: true
+  remote: true
+  drugTest: true
+  assessment: true
+  securityClearance: false
+  degreeCompleted:
+  - Bachelor's Degree
+  - Master's Degree
+  backgroundCheck: true
+universityGpa: 3.6
+salaryMinimum: 200000
+languages:
+  english: Professional
+  indonesian: Native
+noticePeriod: 4
+experience:
+  default: 6
+personalInfo:
+  Pronouns: Ms.
+  First Name: john
+  Last Name: Doe
+  Phone Country Code: United States (+1)
+  Mobile Phone Number: '41-------'
+  Street address: 1000 Market St
+  City: San Francisco, CA
+  State: California
+  Zip: '94100'
+  Linkedin: https://www.linkedin.com/in/eeeeeee/
+  Website: https://github.com/eeeeeee
+  MessageToManager: Hi, I am interested to join your organization. Please have a look
+    at my resume. Thank you.
+eeo:
+  gender: Female
+  race: Asian
+  veteran: 'No'
+  disability: 'No'
+  citizenship: F-1 Visa
+  clearance: 'No'
+evaluateJobFit: false
+
+debug: false

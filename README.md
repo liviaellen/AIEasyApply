@@ -1,0 +1,176 @@
+# AIEasyApply
+
+A Python-based LinkedIn job application bot that automates the job application process using Selenium and OpenAI's GPT-3.5.
+
+## ⚠️ Important Note
+
+This tool is provided for educational purposes only. Automated job applications may violate LinkedIn's terms of service. Use at your own risk.
+
+## 🔒 Account Setup
+
+**Important:** For security reasons, we strongly recommend creating a dedicated LinkedIn account for this bot. This helps:
+
+- Protect your main professional account from potential restrictions
+- Isolate bot activity from your personal networking
+- Prevent accidental applications to positions you're not interested in
+- Maintain a clean separation between automated and manual job applications
+
+To create a new account:
+1. Use a different email address than your main LinkedIn account
+2. Complete the basic profile information
+3. Add minimal professional details to avoid triggering LinkedIn's security measures
+4. Use this account exclusively for the bot
+
+## 🛠️ Installation
+
+1. Clone this repository
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure your settings in `config.yaml`
+
+## 🏃‍♂️ Usage
+
+Run the bot with:
+
+```bash
+python3 main.py
+```
+
+### Command-line Options
+
+The bot supports several command-line arguments:
+
+```bash
+# Run with default settings (using AI for responses)
+python main.py
+
+# Run without AI/LLM (using predefined responses only)
+python main.py --no-llm
+
+# Run in strict mode (adds quotation marks to responses)
+python main.py --strict
+
+# Run without LLM and in strict mode
+python main.py --no-llm --strict
+
+# Run in debug mode with verbose output
+python main.py --debug
+
+# Run with a specific configuration file
+python main.py --config custom_config.yaml
+```
+
+#### Command Arguments
+
+- `--no-llm`: Use predefined responses instead of AI-generated ones
+- `--strict`: Add quotation marks to responses (useful for some application forms)
+- `--debug`: Enable verbose logging for troubleshooting
+- `--config`: Specify a custom configuration file path
+
+Example responses with and without strict mode:
+
+```
+# Normal mode (--strict not used)
+What is your greatest strength?
+→ My ability to learn quickly and adapt to new technologies
+
+# Strict mode (--strict used)
+What is your greatest strength?
+→ "My ability to learn quickly and adapt to new technologies"
+```
+
+### Response Generation Modes
+
+The bot can operate in two modes:
+
+1. **AI Mode (Default)**
+   - Uses OpenAI's GPT-3.5 to generate personalized responses
+   - Requires an OpenAI API key in config.yaml
+   - Provides more natural and context-aware answers
+   - Better at handling complex or unexpected questions
+   - Higher computational resource usage and carbon footprint
+   - Incurs API costs for each response
+
+2. **Predefined Mode (--no-llm)**
+   - Uses a set of predefined responses for common questions
+   - No API key required
+   - Faster and more predictable
+   - Limited to common application questions
+   - Good for testing or when API access is not available
+   - More environmentally friendly (no additional compute resources needed)
+   - Zero operational costs
+
+### Sustainability Considerations
+
+When choosing between AI and predefined modes, consider:
+
+1. **Environmental Impact**
+   - AI Mode: Each response requires significant compute resources
+   - Predefined Mode: Minimal environmental impact, using only basic operations
+
+2. **Resource Efficiency**
+   - AI Mode: Higher latency, API costs, and resource usage
+   - Predefined Mode: Instant responses, no external dependencies
+
+3. **Cost Effectiveness**
+   - AI Mode: Costs scale with usage (OpenAI API charges)
+   - Predefined Mode: Free to use, no ongoing costs
+
+Choose the mode that best aligns with your sustainability goals and practical needs.
+
+The bot will:
+1. Log into your LinkedIn account
+2. Search for jobs based on your criteria
+3. Apply to matching positions using the Easy Apply feature
+4. Generate responses to application questions (AI-powered or predefined)
+5. Track all applications in a CSV file
+
+## 📋 Configuration
+
+Edit the `config.yaml` file to customize:
+- LinkedIn credentials
+- Job search criteria
+- Application preferences
+- OpenAI API key (optional, only needed for AI mode)
+- Personal information for applications
+- Resume and cover letter paths
+
+## ⚙️ Features
+
+- Automated job search and application
+- Smart response generation (AI or predefined)
+- Job fit evaluation
+- Application tracking
+- Session persistence
+- Anti-detection measures
+- Debug mode for troubleshooting
+
+## 📝 Notes
+
+- The bot includes built-in delays to mimic human behavior
+- It handles various types of application questions (text, numeric, multiple choice)
+- Applications are tracked in a CSV file for reference
+- Failed applications are logged separately for review
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📜 License
+
+This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+This project builds upon the work of several contributors:
+
+- Original concept: [Nathan Duma](https://github.com/NathanDuma)
+- Significant improvements: [Micheal Dingess](https://github.com/madingess/)
+- Enhanced features: [voidbydefault](https://github.com/voidbydefault) with [EasyApplyBot](https://github.com/voidbydefault/EasyApplyBot)
+- Current development: [liviaellen](https://github.com/liviaellen)
+
+## 📞 Support
+
+If you encounter any issues, please file them on the [GitHub issues page](https://github.com/liviaellen/AIEasyApply/issues).
